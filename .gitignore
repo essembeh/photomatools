@@ -1,0 +1,14 @@
+# IDE
+/.vscode/*
+!/.vscode/settings.json
+
+# Python 
+/poetry.lock
+/build/
+/dist/
+/.venv/
+__pycache__/
+
+
+# Samples
+/samples
