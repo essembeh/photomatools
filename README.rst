@@ -1,9 +1,14 @@
-Mobile Photo Tools
-==================
+Photo Management Tools
+======================
 
-A collection of command line tools to manipulate photos, especially photos from mobiles phones.
+A collection of command line tools to manages photos (and videos), especially photos from mobiles phones.
 
-MPT tools:
-- `mpt-diff` to compare two photos metadata (EXIF and more)
-- `mpt-dispatch` to move files in subfolders is a subfolder matches the begining of the filename
-- `mpt-md5rename` to rename files with its fingerprint (md5, sha1 ...)
+Available tool:
+- `pmt view` can list metadata (like *EXIF*) from photos/videos, can also compare metadata from two files
+- `pmt rename` can rename photos/videos given prefixing the filename with the date
+- `pmt dispatch` to move files in subfolders if a subfolder matches the begining of the filename (useful to organise photos/videos by year)
+- `pmt uniq` to rename files with their fingerprint (md5, sha1 ...)
+- `pmt dedup` to find duplicate files
+- `pmt borg` to extract new files from a *borg* archive, ie. all files not present in the previous *borg* archive
+
+

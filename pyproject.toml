@@ -1,23 +1,31 @@
 [tool.poetry]
-name = "mobile-photo-tools"
+name = "photomatools"
 version = "0.1.0"
 description = "Toolbox to manipulate and manage photos"
 authors = ["Sébastien MB <seb@essembeh.org>"]
+license = "Apache-2.0"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "License :: OSI Approved :: Apache Software License",
+    "Topic :: Multimedia",
+    "Topic :: Utilities"
+]
 
 [tool.poetry.dependencies]
 python = "^3.7"
 cached-property = "^1.5.2"
 colorama = "^0.4.4"
+importlib_metadata = { version = "", python = "< 3.8" }
 
 [tool.poetry.dev-dependencies]
 pytest = "^4.6"
 black = "^20.8b1"
 pylint = "^2.6.0"
+rope = "^0.18.0"
 
 [tool.poetry.scripts]
-mpt-diff = 'mobile_photo_tools.cli.diff:run'
-mpt-dispatch = 'mobile_photo_tools.cli.dispatch:run'
-mpt-md5rename = 'mobile_photo_tools.cli.md5rename:run'
+pmt = 'photomatools.cli.allinone:main'
+dispatch = 'photomatools.cli.dispatch:Dispatch.main'
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
