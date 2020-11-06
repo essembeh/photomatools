@@ -19,9 +19,6 @@ class Uniq(Tool):
         """
         configure the argument parser
         """
-        parser.add_argument(
-            "-j", "--jobs", type=int, default=4, help="number of parallel threads"
-        )
         group = parser.add_mutually_exclusive_group()
         group.add_argument(
             "--md5",

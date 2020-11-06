@@ -83,7 +83,7 @@ def auto_datetime(text: str):
 
 
 def visit(
-    folder,
+    item,
     recursive: bool = False,
     yield_dir: bool = False,
     filter_fnc: callable = None,
@@ -91,34 +91,31 @@ def visit(
     """
     recursice folder visitor
     """
-    if isinstance(folder, Path):
-        if folder.is_dir():
-            for subfile in folder.iterdir():
-                if (yield_dir or not subfile.is_dir()) and (
-                    filter_fnc is None or filter_fnc(subfile)
-                ):
-                    yield subfile
-                if subfile.is_dir() and recursive:
-                    yield from visit(
-                        subfile,
-                        recursive=recursive,
-                        yield_dir=yield_dir,
-                        filter_fnc=filter_fnc,
-                    )
-        else:
-            if (yield_dir or not subfile.is_dir()) and (
-                filter_fnc is None or filter_fnc(subfile)
-            ):
-                yield subfile
-
-    elif isinstance(folder, collections.Iterable):
-        for subfolder in folder:
+    if isinstance(item, collections.Iterable):
+        # test if iterable
+        for subfolder in item:
             yield from visit(
                 subfolder,
                 recursive=recursive,
                 yield_dir=yield_dir,
                 filter_fnc=filter_fnc,
             )
+    elif isinstance(item, Path):
+        if item.exists():
+            # yield current item
+            if (yield_dir or not item.is_dir()) and (
+                filter_fnc is None or filter_fnc(item)
+            ):
+                yield item
+        if item.is_dir():
+            # yield children in case of folder
+            for child in item.iterdir():
+                yield from visit(
+                    child,
+                    recursive=recursive,
+                    yield_dir=yield_dir,
+                    filter_fnc=filter_fnc,
+                )
 
 
 def print_temp_message(msg: str):
@@ -135,6 +132,9 @@ def iter_to_map(items: Iterable, key_fnc: callable, value_fnc: callable = None):
     out = {}
     for item in items:
         key = key_fnc(item)
+        if key is None:
+            # skip null keys
+            continue
         if key not in out:
             out[key] = []
         out[key].append(value_fnc(item) if value_fnc else item)

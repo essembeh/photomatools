@@ -81,4 +81,7 @@ def default_argument_paser(name: str, description: str = None):
         action="store_true",
         help="print less information",
     )
+    parser.add_argument(
+        "-j", "--jobs", type=int, default=4, help="number of parallel threads"
+    )
     return parser

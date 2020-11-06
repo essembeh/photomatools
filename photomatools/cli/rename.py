@@ -20,9 +20,6 @@ class Rename(Tool):
         configure the argument parser
         """
         parser.add_argument(
-            "-j", "--jobs", type=int, default=4, help="number of parallel threads"
-        )
-        parser.add_argument(
             "-c",
             "--check",
             action="store_true",
