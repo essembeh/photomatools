@@ -6,7 +6,8 @@ from pathlib import Path
 from colorama import Fore, Style
 
 from ..model import MultimediaFile
-from ..tools import preload, label
+from ..tools import label, preload
+from ..utils import visit
 from . import Tool
 
 
@@ -57,6 +58,9 @@ class Uniq(Tool):
             help="use sha512 for fingerprint",
         )
         parser.add_argument(
+            "-r", "--recursive", action="store_true", help="visit folder content"
+        )
+        parser.add_argument(
             "-l",
             "--len",
             dest="length",
@@ -84,7 +88,7 @@ class Uniq(Tool):
         process
         """
         for source, filename in preload(
-            MultimediaFile.filter_map(args.files),
+            MultimediaFile.filter_map(visit(args.files, recursive=args.recursive)),
             lambda x: x.fingerprint(args.hash_fnc),
             workers=args.jobs,
         ):

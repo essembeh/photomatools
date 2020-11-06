@@ -26,6 +26,7 @@ rope = "^0.18.0"
 [tool.poetry.scripts]
 pmt = 'photomatools.cli.allinone:main'
 dispatch = 'photomatools.cli.dispatch:Dispatch.main'
+md5rename = 'photomatools.cli.uniq:Uniq.main'
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
