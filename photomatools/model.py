@@ -35,14 +35,12 @@ class MultimediaFile:
     file: Path
 
     def __post_init__(self, *args, **kwargs):  # pylint: disable=unused-argument
-        if not isinstance(self.file, Path):
+        if isinstance(self.file, str):
             self.file = Path(self.file)
+        elif not isinstance(self.file, Path):
+            raise ValueError(f"Invalid argument: {self.file}")
         if not self.file.is_file():
             raise ValueError(f"Invalid file {self.file}")
-
-    @classmethod
-    def from_string(cls, path: str):
-        return cls(Path(path))
 
     @classmethod
     def filter_map(cls, iterable: Iterable[Path]):
@@ -104,6 +102,11 @@ class MultimediaFile:
     @cached_property
     def metadata(self):
         return read_metadata(self.file)
+
+    def iter_key_value(self, prefix: str = None):
+        for k, v in self.metadata.items():
+            if prefix is None or k.lower().startswith(f"{prefix.lower()}:"):
+                yield k, v
 
     @cached_property
     def create_date(self):

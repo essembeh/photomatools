@@ -9,7 +9,7 @@ from .dedup import Dedup
 from .dispatch import Dispatch
 from .rename import Rename
 from .uniq import Uniq
-from .view import View
+from .view import View, Diff
 
 
 def main():
@@ -20,7 +20,7 @@ def main():
     parser.set_defaults(handler=None)
 
     subparsers = parser.add_subparsers(help="sub-command help")
-    for tool_cls in (Rename, Uniq, View, Dispatch, Borg, Dedup):
+    for tool_cls in (Rename, Uniq, View, Diff, Dispatch, Borg, Dedup):
         tool = tool_cls()
         subparser = subparsers.add_parser(tool.name, help=tool.description)
         subparser.set_defaults(handler=tool)
